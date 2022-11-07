@@ -1,25 +1,30 @@
 package org.example.service;
 
+import org.example.DataBase;
 import org.example.model.Test;
 
 public class TestService implements BaseService<Test,Boolean>{
     @Override
-    public Boolean add(Test test) {
-        return null;
+    public Test add(Test test) {
+       return DataBase.tests.put(test.getId(),test);
     }
 
     @Override
     public Test get(int key) {
-        return null;
+        return DataBase.tests.get(key);
     }
 
     @Override
-    public Boolean upDate(Test test, int key) {
+    public Test upDate(Test test, Long key) {
+        if (DataBase.tests.get(key)==null){
+        return DataBase.tests.put(key,test);
+        }
         return null;
     }
 
     @Override
     public Boolean delete(int key) {
-        return null;
+        DataBase.tests.get(key).setActive(false);
+        return true;
     }
 }

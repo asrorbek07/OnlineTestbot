@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataBase {
     static Gson gson =  new GsonBuilder().setPrettyPrinting().create();
     static BufferedWriter bufferedWriter;
-    public static ConcurrentHashMap<Integer, Test> tests;
+    public static ConcurrentHashMap<Long, Test> tests;
     public static ConcurrentHashMap<Long, User> users;
     public static void save() throws IOException {
 //        TEST
