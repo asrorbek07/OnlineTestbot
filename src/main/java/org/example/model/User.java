@@ -2,10 +2,12 @@ package org.example.model;
 
 import lombok.Data;
 import lombok.Getter;
+import org.example.enums.UserLang;
 
 import java.time.LocalDateTime;
 @Data
 public class User {
+    private UserLang lang;
     private boolean isActive;
     private long userId;
     private String name;

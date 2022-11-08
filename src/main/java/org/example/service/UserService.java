@@ -11,7 +11,7 @@ public class UserService implements BaseService<User, Boolean>{
     }
 
     @Override
-    public User get(int key) {
+    public User get(Long key) {
         return DataBase.users.get(key);
     }
 
@@ -24,7 +24,7 @@ public class UserService implements BaseService<User, Boolean>{
     }
 
     @Override
-    public Boolean delete(int key) {
+    public Boolean delete(Long key) {
         DataBase.users.get(key).setActive(false);
         return true;
     }
