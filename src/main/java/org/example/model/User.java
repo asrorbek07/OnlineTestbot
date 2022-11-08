@@ -3,11 +3,13 @@ package org.example.model;
 import lombok.Data;
 import lombok.Getter;
 import org.example.enums.UserLang;
+import org.example.enums.UserStatus;
 
 import java.time.LocalDateTime;
 @Data
 public class User {
     private UserLang lang;
+    private UserStatus status;
     private boolean isActive;
     private long userId;
     private String name;
