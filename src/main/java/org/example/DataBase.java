@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.example.model.Question;
+import org.example.model.Subject;
 import org.example.model.Test;
 import org.example.model.User;
 
@@ -15,9 +16,20 @@ public class DataBase {
     static BufferedWriter bufferedWriter;
     public static ConcurrentHashMap<Long, Question> questions;
     public static ConcurrentHashMap<Long, User> users;
+    public static ConcurrentHashMap<Long, Subject> subjects;
     public static ConcurrentHashMap<Long, Test> tests;
 
     public static void save() throws IOException {
+//        SUBJECTS
+        File subjectsFile = new File("src/main/java/org/example/files/subjects.json");
+        subjectsFile.createNewFile();
+        FileReader subjectsFileReader = new FileReader(subjectsFile);
+        subjects = gson.fromJson(subjectsFileReader, new TypeToken<ConcurrentHashMap<Long, Subject>>() {
+        }.getType());
+        subjectsFileReader.close();
+        if (subjects == null) {
+            subjects = new ConcurrentHashMap<>();
+        }
 //        Question
         File questionsFile = new File("src/main/java/org/example/files/questions.json");
         questionsFile.createNewFile();
@@ -33,7 +45,7 @@ public class DataBase {
         File usersFile = new File("src/main/java/org/example/files/users.json");
         usersFile.createNewFile();
         FileReader userFileReader = new FileReader(questionsFile);
-        users = gson.fromJson(userFileReader, new TypeToken<ConcurrentHashMap<Long, Question>>() {
+        users = gson.fromJson(userFileReader, new TypeToken<ConcurrentHashMap<Long, User>>() {
         }.getType());
         userFileReader.close();
         if (users == null) {
@@ -54,6 +66,13 @@ public class DataBase {
     }
 
     public static void receive() throws IOException {
+        //        questions
+        File subjectsFile = new File("src/main/java/org/example/files/subjects.json");
+        subjectsFile.createNewFile();
+        String subjectsString = gson.toJson(subjects);
+        bufferedWriter = new BufferedWriter(new FileWriter(subjectsFile));
+        bufferedWriter.write(subjectsString);
+        bufferedWriter.close();
 //        questions
         File questionsFile = new File("src/main/java/org/example/files/questions.json");
         questionsFile.createNewFile();

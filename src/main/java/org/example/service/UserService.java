@@ -17,7 +17,7 @@ public class UserService implements BaseService<User, Boolean>{
 
     @Override
     public User upDate(User user, Long key) {
-        if (DataBase.users.get(key)==null){
+        if (DataBase.users.get(key)!=null){
             return DataBase.users.put(key,user);
         }
         return null;
@@ -25,7 +25,10 @@ public class UserService implements BaseService<User, Boolean>{
 
     @Override
     public Boolean delete(Long key) {
-        DataBase.users.get(key).setActive(false);
-        return true;
+        if (DataBase.users.get(key) != null){
+            DataBase.users.get(key).setActive(false);
+            return true;
+        }
+        return false;
     }
 }

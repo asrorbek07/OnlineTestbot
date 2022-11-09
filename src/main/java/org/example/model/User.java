@@ -6,6 +6,8 @@ import org.example.enums.UserLang;
 import org.example.enums.UserStatus;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
 @Data
 public class User {
     private UserLang lang;
@@ -13,14 +15,12 @@ public class User {
     private boolean isActive;
     private long userId;
     private String name;
-    private int testCount;
     private int ball;
-    private LocalDateTime dateTime;
-
+    private Date date;
     public User(long userId, String name) {
         this.userId = userId;
         this.name = name;
-        this.dateTime=LocalDateTime.now();
+        this.date=new Date();
         this.isActive=true;
     }
 }

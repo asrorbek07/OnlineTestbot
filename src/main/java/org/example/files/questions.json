@@ -1,1 +1,17 @@
-{}
+{
+  "2": {
+    "subjectId": 1,
+    "level": "EASY",
+    "questionUz": "SALOM",
+    "questionEng": "RVVV",
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "correctAnswer": "C",
+    "ball": 5,
+    "date": "Nov 9, 2022, 3:03:36 PM",
+    "id": 2,
+    "isActive": true
+  }
+}
