@@ -1,23 +1,93 @@
 {
   "1": {
-    "name": "sdf",
-    "questionsId": [
-      2,
-      2,
-      3,
-      3,
-      3,
-      3
-    ],
-    "date": "Nov 9, 2022, 2:48:07 PM",
+    "name": "Math",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 5:24:13 PM",
     "id": 1,
     "isActive": true
   },
   "2": {
-    "name": "0",
+    "name": "History",
     "questionsId": [],
-    "date": "Nov 9, 2022, 3:06:46 PM",
+    "date": "Nov 9, 2022, 5:24:18 PM",
     "id": 2,
+    "isActive": false
+  },
+  "3": {
+    "name": "Geo",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 5:24:26 PM",
+    "id": 3,
+    "isActive": true
+  },
+  "4": {
+    "name": "Finance",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 6:58:24 PM",
+    "id": 4,
+    "isActive": true
+  },
+  "5": {
+    "name": "Art",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 6:58:48 PM",
+    "id": 5,
+    "isActive": true
+  },
+  "6": {
+    "name": "Biology",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:00:32 PM",
+    "id": 6,
+    "isActive": true
+  },
+  "7": {
+    "name": "Chemstry",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:00:56 PM",
+    "id": 7,
+    "isActive": true
+  },
+  "8": {
+    "name": "Physics",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:01:01 PM",
+    "id": 8,
+    "isActive": true
+  },
+  "9": {
+    "name": "Information tecnology",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:01:14 PM",
+    "id": 9,
+    "isActive": true
+  },
+  "10": {
+    "name": "Tecnology",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:01:34 PM",
+    "id": 10,
+    "isActive": true
+  },
+  "11": {
+    "name": "Literature",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:01:50 PM",
+    "id": 11,
+    "isActive": true
+  },
+  "12": {
+    "name": "Algebra",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:02:06 PM",
+    "id": 12,
+    "isActive": true
+  },
+  "13": {
+    "name": "Geometriya",
+    "questionsId": [],
+    "date": "Nov 9, 2022, 7:02:14 PM",
+    "id": 13,
     "isActive": true
   }
 }

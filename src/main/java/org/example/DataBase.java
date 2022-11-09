@@ -9,58 +9,59 @@ import org.example.model.Test;
 import org.example.model.User;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DataBase {
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     static BufferedWriter bufferedWriter;
-    public static ConcurrentHashMap<Long, Question> questions;
-    public static ConcurrentHashMap<Long, User> users;
-    public static ConcurrentHashMap<Long, Subject> subjects;
-    public static ConcurrentHashMap<Long, Test> tests;
+    public static HashMap<Long, Question> questions;
+    public static HashMap<Long, User> users;
+    public static HashMap<Long, Subject> subjects;
+    public static HashMap<Long, Test> tests;
 
     public static void save() throws IOException {
 //        SUBJECTS
         File subjectsFile = new File("src/main/java/org/example/files/subjects.json");
         subjectsFile.createNewFile();
         FileReader subjectsFileReader = new FileReader(subjectsFile);
-        subjects = gson.fromJson(subjectsFileReader, new TypeToken<ConcurrentHashMap<Long, Subject>>() {
+        subjects = gson.fromJson(subjectsFileReader, new TypeToken<HashMap<Long, Subject>>() {
         }.getType());
         subjectsFileReader.close();
         if (subjects == null) {
-            subjects = new ConcurrentHashMap<>();
+            subjects = new HashMap<>();
         }
 //        Question
         File questionsFile = new File("src/main/java/org/example/files/questions.json");
         questionsFile.createNewFile();
         FileReader questionsFileReader = new FileReader(questionsFile);
-        questions = gson.fromJson(questionsFileReader, new TypeToken<ConcurrentHashMap<Long, Question>>() {
+        questions = gson.fromJson(questionsFileReader, new TypeToken<HashMap<Long, Question>>() {
         }.getType());
         questionsFileReader.close();
         if (questions == null) {
-            questions = new ConcurrentHashMap<>();
+            questions = new HashMap<>();
         }
 
 //      USERS
         File usersFile = new File("src/main/java/org/example/files/users.json");
         usersFile.createNewFile();
-        FileReader userFileReader = new FileReader(questionsFile);
-        users = gson.fromJson(userFileReader, new TypeToken<ConcurrentHashMap<Long, User>>() {
+        FileReader userFileReader = new FileReader(usersFile);
+        users = gson.fromJson(userFileReader, new TypeToken<HashMap<Long, User>>() {
         }.getType());
         userFileReader.close();
         if (users == null) {
-            users = new ConcurrentHashMap<>();
+            users = new HashMap<>();
         }
 
         //        Test
         File testsFile = new File("src/main/java/org/example/files/tests.json");
         testsFile.createNewFile();
         FileReader testsFileReader = new FileReader(testsFile);
-        tests = gson.fromJson(testsFileReader, new TypeToken<ConcurrentHashMap<Long, Test>>() {
+        tests = gson.fromJson(testsFileReader, new TypeToken<HashMap<Long, Test>>() {
         }.getType());
         testsFileReader.close();
         if (tests == null) {
-            tests = new ConcurrentHashMap<>();
+            tests = new HashMap<>();
         }
 
     }

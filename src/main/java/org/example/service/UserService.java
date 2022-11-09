@@ -7,6 +7,8 @@ public class UserService implements BaseService<User, Boolean>{
 
     @Override
     public User add(User user) {
+        System.out.println("user add");
+        System.out.println(user);
         return DataBase.users.put(user.getUserId(),user);
     }
 

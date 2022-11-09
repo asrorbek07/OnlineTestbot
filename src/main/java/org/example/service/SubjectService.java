@@ -3,11 +3,10 @@ package org.example.service;
 import org.example.DataBase;
 import org.example.model.Subject;
 
-import java.util.Enumeration;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SubjectService implements BaseService<Subject,Boolean>{
 
@@ -40,11 +39,9 @@ public class SubjectService implements BaseService<Subject,Boolean>{
         }
         return false;
     }
-    public Enumeration<Subject> getAll(){
-        ConcurrentHashMap<Long, Subject> collect = (ConcurrentHashMap<Long,Subject>)DataBase.subjects.entrySet()
-                .stream().parallel()
-                .filter(e -> e.getValue().isActive())
-                .collect(Collectors.toConcurrentMap(Map.Entry::getKey, Map.Entry::getValue));
-     return    collect.elements();
+    public Set<Map.Entry<Long, Subject>> getAll(){
+        return DataBase.subjects.entrySet().stream().parallel().filter(i -> i.getValue().isActive()).collect(Collectors.toSet());
+
+
     }
 }

@@ -13,9 +13,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Main {
@@ -51,12 +49,9 @@ public class Main {
                         DataBase.receive();
                 }
                 case 2 -> {
-                    Enumeration<Subject> all = subjectService.getAll();
-                    while (all.hasMoreElements()) {
-                        Subject subject = all.nextElement();
-                        System.out.println(subject.getId() + " : " + subject.getName());
+                    for (Map.Entry<Long, Subject> longSubjectEntry : subjectService.getAll()) {
+                        System.out.println(longSubjectEntry.getValue().getId()+" : "+longSubjectEntry.getValue().getName());
                     }
-
                     System.out.println("enter subject id: ");
                     Long subjectId = scannerLong.nextLong();
                     Subject subject = subjectService.get(subjectId);

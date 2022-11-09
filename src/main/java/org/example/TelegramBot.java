@@ -3,8 +3,10 @@ package org.example;
 import org.example.enums.ReplayOption;
 import org.example.enums.UserLang;
 import org.example.enums.UserStatus;
+import org.example.model.Subject;
 import org.example.model.User;
 import org.example.service.QuestionService;
+import org.example.service.SubjectService;
 import org.example.service.TestService;
 import org.example.service.UserService;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -19,8 +21,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
@@ -28,6 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private QuestionService questionService = new QuestionService();
     private TestService testService = new TestService();
     private UserService userService = new UserService();
+    private SubjectService subjectService = new SubjectService();
     private String botToken = "5730104416:AAEd6dhguyo3pIQQSW_MxOwT47V1tdxh2P0";
     private String botUserName = "t.me/pdp_b24_online_test_bot";
 
@@ -47,43 +50,46 @@ public class TelegramBot extends TelegramLongPollingBot {
             Message message = update.getMessage();
             Chat chat = message.getChat();
             if (message.hasText()) {
+                User currentUser = userService.get(chat.getId());
                 if (message.getText().equals("/start")) {
-                    User currentUser = userService.get(chat.getId());
 
                     if (currentUser == null) {
                         currentUser = signUp(chat);
                         userService.add(currentUser);
+                        try {
+                            DataBase.receive();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-                    if (currentUser.getLang()==null) {
+                    if (currentUser.getLang() == null) {
                         currentUser.setStatus(UserStatus.START);
-                        myExecute("Tilni tanlang", chat.getId(), inlineLenguageButton(),null);
+
+                        myExecute("Tilni tanlang", chat.getId(), inlineLenguageButton(), null);
                     } else {
                         currentUser.setStatus(UserStatus.SELECT_LANG);
-                        myExecute(currentUser.getLang()==UserLang.Uz ?"Xush Kelibsiz":"Welcome", chat.getId(), null,replyKeyboardMarkupOption());
-
+                        myExecute(currentUser.getLang() == UserLang.Uz ? "Xush Kelibsiz" : "Welcome", chat.getId(), null, replyKeyboardMarkupOption());
                     }
 
-                    signIn(currentUser);
+                } else if (message.getText().equals("TEST")) {
+                    myExecute("CHOOSE SUBJECT", chat.getId(), getSubjectInlineMarkup(currentUser), null);
                 }
             }
         } else if (update.hasCallbackQuery()) {
             String data = update.getCallbackQuery().getData();
             Long userId = update.getCallbackQuery().getFrom().getId();
             User currentUser = userService.get(userId);
-            if (currentUser.getStatus().equals(UserStatus.START)&&(data.equals(UserLang.Uz.name())||data.equals(UserLang.Eng.name()))) {
+            if (currentUser.getStatus().equals(UserStatus.START) && (data.equals(UserLang.Uz.name()) || data.equals(UserLang.Eng.name()))) {
                 setLang(data, currentUser);
             }
-            if (currentUser.getStatus() == UserStatus.SELECT_LANG) {
-                myExecute(currentUser.getLang()==UserLang.Uz ?"Xush Kelibsiz":"Welcome",userId,null,replyKeyboardMarkupOption());
+            if (data.equals(UserLang.Uz.name()) || data.equals(UserLang.Uz.name())) {
+                myExecute(currentUser.getLang() == UserLang.Uz ? "Xush Kelibsiz" : "Welcome", userId, null, replyKeyboardMarkupOption());
+
             }
+
 
         }
     }
-
-
-//    private void selectReplayOption(String data, User currentUser) {
-//
-//    }
 
     private static void setLang(String data, User currentUser) {
         if (data.equals(UserLang.Uz.name()))
@@ -92,6 +98,11 @@ public class TelegramBot extends TelegramLongPollingBot {
             currentUser.setLang(UserLang.Eng);
         }
         currentUser.setStatus(UserStatus.SELECT_LANG);
+        try {
+            DataBase.receive();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -124,6 +135,33 @@ public class TelegramBot extends TelegramLongPollingBot {
         return inlineKeyboardMarkup;
     }
 
+    private InlineKeyboardMarkup getSubjectInlineMarkup(User currentUser) {
+        Set<Map.Entry<Long, Subject>> entries = subjectService.getAll();
+        InlineKeyboardMarkup subjectInlineMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> buttonsRow = new ArrayList<>();
+        List<InlineKeyboardButton> buttons = new ArrayList<>();
+        int n = 0;
+        for (Map.Entry<Long, Subject> entry : entries) {
+            Subject value = entry.getValue();
+                InlineKeyboardButton button = new InlineKeyboardButton();
+                button.setText(value.getName());
+                button.setCallbackData(currentUser.getStatus().toString());
+                buttons.add(button);
+                n++;
+                if (n == 3) {
+                    n = 0;
+                    buttonsRow.add(buttons);
+                    buttons = new ArrayList<>();
+                }
+
+        }
+        if (n > 0) {
+            buttonsRow.add(buttons);
+        }
+        subjectInlineMarkup.setKeyboard(buttonsRow);
+        System.out.println(subjectInlineMarkup==null);
+        return subjectInlineMarkup;
+    }
     private ReplyKeyboardMarkup replyKeyboardMarkupOption() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> rows = new ArrayList<>();
@@ -140,11 +178,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         return replyKeyboardMarkup;
 
     }
-    public void myExecute(String text,Long userId,InlineKeyboardMarkup iMarkup, ReplyKeyboardMarkup rMarkup){
-        SendMessage sendMessageReplayOption =new SendMessage();
+
+    public void myExecute(String text, Long userId, InlineKeyboardMarkup iMarkup, ReplyKeyboardMarkup rMarkup) {
+        System.out.println("enter");
+        SendMessage sendMessageReplayOption = new SendMessage();
         sendMessageReplayOption.setChatId(userId);
         sendMessageReplayOption.setText(text);
-        sendMessageReplayOption.setReplyMarkup(iMarkup==null? rMarkup:iMarkup);
+
+        sendMessageReplayOption.setReplyMarkup(iMarkup == null ? rMarkup : iMarkup);
         try {
             execute(sendMessageReplayOption);
         } catch (TelegramApiException e) {
