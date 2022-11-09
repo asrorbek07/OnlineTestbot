@@ -35,4 +35,5 @@ private int ball;
         this.correctAnswer = correctAnswer;
         this.ball=level.equals(QuestionLevel.EASY)?5:(level.equals(QuestionLevel.MEDIUM)?10:15);
     }
+
 }

@@ -1,6 +1,5 @@
 package org.example.enums;
 
-import lombok.Data;
 public enum Variant {
     A,B,C,D;
     private String uzName;

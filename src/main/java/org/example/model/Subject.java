@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 @Data
-
 @NoArgsConstructor
 public class Subject extends Base{
     private String name;
