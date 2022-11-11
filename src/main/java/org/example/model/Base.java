@@ -15,7 +15,7 @@ public abstract class Base {
     public Base() {
         this.id = ++idGeneration;
         this.isActive=true;
-        this.date=new Date();
+        this.date= new Date();
     }
 
 

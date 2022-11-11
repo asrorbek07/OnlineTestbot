@@ -30,6 +30,7 @@ public class DataBase {
         subjectsFileReader.close();
         if (subjects == null) {
             subjects = new HashMap<>();
+
         }
 //        Question
         File questionsFile = new File("src/main/java/org/example/files/questions.json");

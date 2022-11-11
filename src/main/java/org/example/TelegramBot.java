@@ -50,44 +50,51 @@ public class TelegramBot extends TelegramLongPollingBot {
             Message message = update.getMessage();
             Chat chat = message.getChat();
             if (message.hasText()) {
-                User currentUser = userService.get(chat.getId());
-                if (message.getText().equals("/start")) {
-
-                    if (currentUser == null) {
-                        currentUser = signUp(chat);
-                        userService.add(currentUser);
-                        try {
-                            DataBase.receive();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    if (currentUser.getLang() == null) {
-                        currentUser.setStatus(UserStatus.START);
-
-                        myExecute("Tilni tanlang", chat.getId(), inlineLenguageButton(), null);
-                    } else {
-                        currentUser.setStatus(UserStatus.SELECT_LANG);
-                        myExecute(currentUser.getLang() == UserLang.Uz ? "Xush Kelibsiz" : "Welcome", chat.getId(), null, replyKeyboardMarkupOption());
-                    }
-
-                } else if (message.getText().equals("TEST")) {
-                    myExecute("CHOOSE SUBJECT", chat.getId(), getSubjectInlineMarkup(currentUser), null);
-                }
+                message(message, chat);
             }
         } else if (update.hasCallbackQuery()) {
-            String data = update.getCallbackQuery().getData();
-            Long userId = update.getCallbackQuery().getFrom().getId();
-            User currentUser = userService.get(userId);
-            if (currentUser.getStatus().equals(UserStatus.START) && (data.equals(UserLang.Uz.name()) || data.equals(UserLang.Eng.name()))) {
-                setLang(data, currentUser);
+            callBackQuery(update);
+        }
+    }
+
+    private void message(Message message, Chat chat) {
+        User currentUser = userService.get(chat.getId());
+        if (message.getText().equals("/start")) {
+            start(chat, currentUser);
+        } else if (message.getText().equals("TEST")) {
+            myExecute("CHOOSE SUBJECT", chat.getId(), getSubjectInlineMarkup(currentUser), null);
+        }
+    }
+
+    private void callBackQuery(Update update) {
+        String data = update.getCallbackQuery().getData();
+        Long userId = update.getCallbackQuery().getFrom().getId();
+        User currentUser = userService.get(userId);
+        if (currentUser.getStatus().equals(UserStatus.START) && (data.equals(UserLang.Uz.name()) || data.equals(UserLang.Eng.name()))) {
+            setLang(data, currentUser);
+        }
+        if (data.equals(UserLang.Uz.name()) || data.equals(UserLang.Uz.name())) {
+            myExecute(currentUser.getLang() == UserLang.Uz ? "Xush Kelibsiz" : "Welcome", userId, null, replyKeyboardMarkupOption());
+
+        }
+    }
+
+    private void start(Chat chat, User currentUser) {
+        if (currentUser == null) {
+            currentUser = signUp(chat);
+            userService.add(currentUser);
+            try {
+                DataBase.receive();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            if (data.equals(UserLang.Uz.name()) || data.equals(UserLang.Uz.name())) {
-                myExecute(currentUser.getLang() == UserLang.Uz ? "Xush Kelibsiz" : "Welcome", userId, null, replyKeyboardMarkupOption());
+        }
+        if (currentUser.getLang() == null) {
 
-            }
-
-
+            myExecute("Tilni tanlang", chat.getId(), inlineLenguageButton(), null);
+        } else {
+            currentUser.setStatus(UserStatus.SELECT_LANG);
+            myExecute(currentUser.getLang() == UserLang.Uz ? "Xush Kelibsiz" : "Welcome", chat.getId(), null, replyKeyboardMarkupOption());
         }
     }
 
@@ -110,7 +117,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private User signUp(Chat chat) {
-        return new User(chat.getId(), chat.getFirstName());
+        User user = new User(chat.getId(), chat.getFirstName());
+        user.setStatus(UserStatus.START);
+        return user;
+
     }
 
     private InlineKeyboardMarkup inlineLenguageButton() {
