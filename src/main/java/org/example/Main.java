@@ -4,6 +4,7 @@ import org.example.enums.QuestionLevel;
 import org.example.enums.Variant;
 import org.example.model.Question;
 import org.example.model.Subject;
+import org.example.model.User;
 import org.example.service.QuestionService;
 import org.example.service.SubjectService;
 import org.example.service.TestService;
@@ -28,11 +29,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException, TelegramApiException {
         DataBase.save();
+        for (Map.Entry<Long, Question> longQuestionEntry : questionService.getAll()) {
+            System.out.println(longQuestionEntry.getValue());
+        }
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         telegramBotsApi.registerBot(new TelegramBot());
         DataBase.receive();
         adminPanel();
-
         }
 
 
@@ -79,7 +82,6 @@ public class Main {
             switch (v1) {
                 case 1 -> {
                     createNewQuestion(subject);
-
                 }
 
                 case 2 -> {
@@ -89,14 +91,14 @@ public class Main {
                             System.out.println("ID: " + question.getId());
                             System.out.println("QUESTION_UZ: " + question.getQuestionUz());
                             System.out.println("QUESTION_ENG: " + question.getQuestionEng());
-                            System.out.println("VARIANT A_UZ: " + question.getA().getUzName());
-                            System.out.println("VARIANT A_ENG: " + question.getA().getEngName());
-                            System.out.println("VARIANT A_UZ: " + question.getB().getUzName());
-                            System.out.println("VARIANT A_ENG: " + question.getB().getEngName());
-                            System.out.println("VARIANT A_UZ: " + question.getC().getUzName());
-                            System.out.println("VARIANT A_ENG: " + question.getC().getEngName());
-                            System.out.println("VARIANT A_UZ: " + question.getD().getUzName());
-                            System.out.println("VARIANT A_ENG: " + question.getD().getEngName());
+                            System.out.println("VARIANT A_UZ: " + question.getUzVariantA());
+                            System.out.println("VARIANT A_ENG: " + question.getEngVariantA());
+                            System.out.println("VARIANT A_UZ: " + question.getUzVariantA());
+                            System.out.println("VARIANT A_ENG: " + question.getEngVariantA());
+                            System.out.println("VARIANT A_UZ: " + question.getUzVariantA());
+                            System.out.println("VARIANT A_ENG: " + question.getEngVariantA());
+                            System.out.println("VARIANT A_UZ: " + question.getUzVariantA());
+                            System.out.println("VARIANT A_ENG: " + question.getEngVariantA());
                         }
                     }
 
@@ -131,53 +133,55 @@ public class Main {
             else if (var == 3) level = QuestionLevel.HARD;
             else System.out.println("To'g'ri kiriting");
         }
+
+        Long subjectId = subject.getId();
+        QuestionLevel questionLevel = (level);
+
         System.out.println("ENTER QUESTION_UZ");
-        String questionUz = scannerScr.nextLine();
+        String quas_uz = (scannerScr.nextLine());
         System.out.println("ENTER QUESTION_ENG");
-        String questionEng = scannerScr.nextLine();
-        Variant A = Variant.A;
+        String quas_eng =(scannerScr.nextLine());
+
         System.out.println("A variantni kiriting");
         System.out.println("Uzb");
-        A.setUzName(scannerScr.nextLine());
-        System.out.println(A.getUzName());
+        String a_uz =(scannerScr.nextLine());
         System.out.println("Eng");
-        A.setEngName(scannerScr.nextLine());
+        String a_eng=(scannerScr.nextLine());
 
-        Variant B = Variant.B;
         System.out.println("B variantni kiriting");
         System.out.println("Uzb");
-        B.setUzName(scannerScr.nextLine());
+        String b_uz =(scannerScr.nextLine());
         System.out.println("Eng");
-        B.setEngName(scannerScr.nextLine());
+        String b_eng = (scannerScr.nextLine());
 
-        Variant C = Variant.C;
         System.out.println("C variantni kiriting");
         System.out.println("Uzb");
-        C.setUzName(scannerScr.nextLine());
+        String c_uz =(scannerScr.nextLine());
         System.out.println("Eng");
-        C.setEngName(scannerScr.nextLine());
+        String c_eng =(scannerScr.nextLine());
 
-        Variant D = Variant.D;
         System.out.println("D variantni kiriting");
         System.out.println("Uzb");
-        D.setUzName(scannerScr.nextLine());
+        String d_uz =(scannerScr.nextLine());
         System.out.println("Eng");
-        D.setEngName(scannerScr.nextLine());
+        String d_eng =(scannerScr.nextLine());
 
-        Variant correctAnswer = null;
-        while (correctAnswer == null) {
-            System.out.println("To'g'ri variantni kiriting 1.A 2.B 3.C 4.D");
+        String answer=null;
+            System.out.println("ENTER CORRECT VARIANT 1.A 2.B 3.C 4.D");
             int n = scannerInt.nextInt();
             switch (n) {
-                case 1 -> correctAnswer = A;
-                case 2 -> correctAnswer = B;
-                case 3 -> correctAnswer = C;
-                case 4 -> correctAnswer = D;
+                case 1 ->  answer = "A";
+                case 2 ->  answer = "B";
+                case 3 ->  answer = "C";
+                case 4 ->  answer = "D";
             }
-        }
-        Question newQuestion = new Question(subject.getId(), level, questionUz,questionEng, A, B, C, D, correctAnswer);
-        questionService.add(newQuestion);
-        subject.addNewQuestionIdToArray(newQuestion.getId());
+
+
+
+        Question question = new Question(subjectId,questionLevel,quas_uz,quas_eng,a_uz,b_uz,c_uz,d_uz,a_eng
+                ,b_eng,c_eng,d_eng,answer);
+        questionService.add(question);
+        subject.addNewQuestionIdToArray(question.getId());
         DataBase.receive();
     }
 }

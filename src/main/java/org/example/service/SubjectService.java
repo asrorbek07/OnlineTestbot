@@ -41,7 +41,6 @@ public class SubjectService implements BaseService<Subject,Boolean>{
     }
     public Set<Map.Entry<Long, Subject>> getAll(){
         return DataBase.subjects.entrySet().stream().parallel().filter(i -> i.getValue().isActive()).collect(Collectors.toSet());
-
-
     }
+
 }

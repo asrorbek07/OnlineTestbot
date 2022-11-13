@@ -1,7 +1,12 @@
 package org.example.service;
 
 import org.example.DataBase;
+import org.example.model.Subject;
 import org.example.model.User;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserService implements BaseService<User, Boolean>{
 
@@ -32,5 +37,9 @@ public class UserService implements BaseService<User, Boolean>{
             return true;
         }
         return false;
+    }
+
+    public Set<Map.Entry<Long, User>> getAll(){
+        return DataBase.users.entrySet().stream().parallel().filter(i -> i.getValue().isActive()).collect(Collectors.toSet());
     }
 }
