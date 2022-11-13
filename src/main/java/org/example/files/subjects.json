@@ -1,93 +1,107 @@
 {
   "1": {
-    "name": "Math",
-    "questionsId": [],
-    "date": "Nov 9, 2022, 5:24:13 PM",
+    "name": "MAth",
+    "questionsId": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      13,
+      14,
+      15,
+      49,
+      50,
+      1047,
+      1315,
+      1316,
+      1317,
+      1318,
+      1319,
+      1320,
+      1456,
+      2522,
+      2523,
+      2524,
+      2525,
+      2526,
+      2527,
+      3399,
+      3585,
+      3586,
+      3774,
+      3963,
+      5244,
+      5245,
+      5246,
+      5247,
+      5248,
+      5249,
+      5250,
+      7466,
+      7726,
+      7987,
+      8249,
+      8250
+    ],
+    "date": "Nov 11, 2022, 6:08:59 PM",
     "id": 1,
     "isActive": true
   },
   "2": {
-    "name": "History",
+    "name": "Ona tili",
     "questionsId": [],
-    "date": "Nov 9, 2022, 5:24:18 PM",
+    "date": "Nov 11, 2022, 6:09:05 PM",
     "id": 2,
-    "isActive": false
+    "isActive": true
   },
   "3": {
-    "name": "Geo",
+    "name": "tarix",
     "questionsId": [],
-    "date": "Nov 9, 2022, 5:24:26 PM",
+    "date": "Nov 11, 2022, 6:09:14 PM",
     "id": 3,
     "isActive": true
   },
   "4": {
-    "name": "Finance",
+    "name": "geografiya",
     "questionsId": [],
-    "date": "Nov 9, 2022, 6:58:24 PM",
+    "date": "Nov 11, 2022, 6:09:18 PM",
     "id": 4,
     "isActive": true
   },
   "5": {
-    "name": "Art",
+    "name": "informatika",
     "questionsId": [],
-    "date": "Nov 9, 2022, 6:58:48 PM",
+    "date": "Nov 11, 2022, 6:09:25 PM",
     "id": 5,
     "isActive": true
   },
   "6": {
-    "name": "Biology",
+    "name": "jistar",
     "questionsId": [],
-    "date": "Nov 9, 2022, 7:00:32 PM",
+    "date": "Nov 11, 2022, 6:09:30 PM",
     "id": 6,
     "isActive": true
   },
-  "7": {
-    "name": "Chemstry",
+  "3398": {
+    "name": "2",
     "questionsId": [],
-    "date": "Nov 9, 2022, 7:00:56 PM",
-    "id": 7,
-    "isActive": true
+    "date": "Nov 13, 2022, 11:44:49 AM",
+    "id": 3398,
+    "isActive": false
   },
-  "8": {
-    "name": "Physics",
+  "2521": {
+    "name": "m",
     "questionsId": [],
-    "date": "Nov 9, 2022, 7:01:01 PM",
-    "id": 8,
-    "isActive": true
+    "date": "Nov 13, 2022, 11:23:59 AM",
+    "id": 2521,
+    "isActive": false
   },
-  "9": {
-    "name": "Information tecnology",
+  "1455": {
+    "name": "fizika",
     "questionsId": [],
-    "date": "Nov 9, 2022, 7:01:14 PM",
-    "id": 9,
-    "isActive": true
-  },
-  "10": {
-    "name": "Tecnology",
-    "questionsId": [],
-    "date": "Nov 9, 2022, 7:01:34 PM",
-    "id": 10,
-    "isActive": true
-  },
-  "11": {
-    "name": "Literature",
-    "questionsId": [],
-    "date": "Nov 9, 2022, 7:01:50 PM",
-    "id": 11,
-    "isActive": true
-  },
-  "12": {
-    "name": "Algebra",
-    "questionsId": [],
-    "date": "Nov 9, 2022, 7:02:06 PM",
-    "id": 12,
-    "isActive": true
-  },
-  "13": {
-    "name": "Geometriya",
-    "questionsId": [],
-    "date": "Nov 9, 2022, 7:02:14 PM",
-    "id": 13,
+    "date": "Nov 13, 2022, 10:45:55 AM",
+    "id": 1455,
     "isActive": true
   }
 }

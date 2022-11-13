@@ -2,6 +2,11 @@ package org.example.service;
 
 import org.example.DataBase;
 import org.example.model.Question;
+import org.example.model.Subject;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class QuestionService implements BaseService<Question,Boolean>{
     @Override
@@ -34,5 +39,9 @@ public class QuestionService implements BaseService<Question,Boolean>{
             return true;
         }else return false;
 
+    }
+
+    public Set<Map.Entry<Long, Question>> getAll(){
+        return DataBase.questions.entrySet().stream().parallel().filter(i -> i.getValue().isActive()).collect(Collectors.toSet());
     }
 }

@@ -13,9 +13,9 @@ public class User {
     private UserLang lang;
     private UserStatus status;
     private boolean isActive;
+    private Test test;
     private long userId;
     private String name;
-    private int ball;
     private Date date;
     public User(long userId, String name) {
         this.userId = userId;
